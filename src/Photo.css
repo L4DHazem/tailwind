@@ -1,0 +1,75 @@
+/* ------------------------------------------------------------------
+   Photo page — editorial scroll system
+   ------------------------------------------------------------------ */
+
+.photo-page {
+  --page-x: clamp(20px, 4.5vw, 80px);
+  font-feature-settings: "kern" 1, "liga" 1;
+}
+
+.photo-page ::selection {
+  background: var(--color-room-gold);
+  color: var(--color-room-ink);
+}
+
+/* Fine film grain, used on the dark sections */
+.room-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  opacity: 0.055;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+/* Giant outlined word behind the portal */
+.room-outline {
+  color: transparent;
+  -webkit-text-stroke: 1px color-mix(in srgb, var(--color-room-gold) 42%, transparent);
+}
+
+/* Seamless marquee strip */
+.room-marquee {
+  animation: room-marquee 42s linear infinite;
+  will-change: transform;
+}
+
+@keyframes room-marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* Thin gold hairlines */
+.room-hairline {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--color-room-gold) 65%, transparent) 18%,
+    color-mix(in srgb, var(--color-room-gold) 65%, transparent) 82%,
+    transparent
+  );
+}
+
+/* Editorial diamond divider */
+.room-diamond::before {
+  content: "";
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  margin-right: 0.9em;
+  background: currentColor;
+  transform: rotate(45deg) translateY(-1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .room-marquee {
+    animation: none;
+  }
+}
